@@ -48,7 +48,8 @@ class PostsController extends Controller
     public function show($id)
     {
         //
-        return 'this is the show methid yay' . $id;
+        // return view('post')->with('id', $id);
+        return view('post', compact('id'));
     }
 
     /**
@@ -83,5 +84,9 @@ class PostsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function contact() {
+        return view('contact');
     }
 }
