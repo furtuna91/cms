@@ -88,6 +88,23 @@ Route::get('/findmore', function(){
 });
 
 
+// Route::get('/basicinsert', function() {
+//     $post = new Post;
+//     $post->title = 'New Eloquent title insert';
+//     $post->content = 'Wow..whatafacaiaio';
+//     $post->save();
+// });
+
+Route::get('/create', function() {
+    Post::create([
+        'title' => 'the created method',
+        'content' => 'wow...i am creating'
+    ]);
+});
+
+
+
+
 
 Route::resource('posts', 'PostsController');
 Route::get('/contact', 'PostsController@contact');
