@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Post;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,8 +34,77 @@ Route::get('/', function () {
 //     return 'this url is' . $url;
 // }));
 
-
 // Route::get('/post/{id}', 'PostsController@index');
+
+
+
+// ------------------------------------------------------------------DB RAW QUERRIES
+
+Route::get('/insert', function(){
+    DB::insert('insert into posts(title, content) values(?,?)', ['blah blah', 'blah blah blah']);
+});
+
+// Route::get('/read', function(){
+//     $results = DB::table('posts')->get();
+
+//     dd($results);
+
+//     // foreach ($results as $item) {
+//     //     return $item->title;
+//     // }
+    
+// });
+
+Route::get('/update', function() {
+    $updated = DB::table('posts')
+        ->where('id', 1)
+        ->update(['title' => 'PHP with laravel vs']);
+
+    return $updated;
+});
+
+// Route::get('/delete', function() {
+//     $deleted = DB::table('posts')->where('id', '=', 1)->delete();
+//     return $deleted;
+// });
+
+// ------------------------------------------------------------------ELOQUENT
+Route::get('/read', function() {
+    $posts = Post::all();
+    foreach ($posts as $post) {
+        # code...
+        return $post->title;
+    }
+});
+
+Route::get('/findwhere', function() {
+    $posts = Post::where('id', 1)->orderBy('id', 'desc')->get();
+    return $posts;
+});
+
+Route::get('/findmore', function(){
+    $posts = Post::findOrFail(1);
+    return $posts;
+});
+
+
+// Route::get('/basicinsert', function() {
+//     $post = new Post;
+//     $post->title = 'New Eloquent title insert';
+//     $post->content = 'Wow..whatafacaiaio';
+//     $post->save();
+// });
+
+Route::get('/create', function() {
+    Post::create([
+        'title' => 'the created method',
+        'content' => 'wow...i am creating'
+    ]);
+});
+
+
+
+
 
 Route::resource('posts', 'PostsController');
 Route::get('/contact', 'PostsController@contact');
