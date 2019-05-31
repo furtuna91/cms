@@ -1,4 +1,4 @@
-<?php
+a<?php
 
 /*
 |--------------------------------------------------------------------------
@@ -33,8 +33,11 @@ Route::get('/', function () {
 //     return 'this url is' . $url;
 // }));
 
-
 // Route::get('/post/{id}', 'PostsController@index');
+
+Route::get('/insert', function(){
+    DB::insert('insert into posts(title, content) values(?,?)', ['PHP with laravel', 'Laravel is the best thing that has happened to php']);
+});
 
 Route::resource('posts', 'PostsController');
 Route::get('/contact', 'PostsController@contact');
