@@ -1,4 +1,4 @@
-a<?php
+<?php
 
 /*
 |--------------------------------------------------------------------------
@@ -35,9 +35,25 @@ Route::get('/', function () {
 
 // Route::get('/post/{id}', 'PostsController@index');
 
-Route::get('/insert', function(){
-    DB::insert('insert into posts(title, content) values(?,?)', ['PHP with laravel', 'Laravel is the best thing that has happened to php']);
+
+
+// ------------------------------------------------------------------DB RAW QUERRIES
+// Route::get('/insert', function(){
+//     DB::insert('insert into posts(title, content) values(?,?)', ['PHP with laravel', 'Laravel is the best thing that has happened to php']);
+// });
+
+Route::get('/read', function(){
+    $results = DB::table('posts')->get();
+
+    dd($results);
+
+    // foreach ($results as $item) {
+    //     return $item->title;
+    // }
+    
 });
+
+
 
 Route::resource('posts', 'PostsController');
 Route::get('/contact', 'PostsController@contact');
