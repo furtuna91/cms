@@ -41,7 +41,7 @@ Route::get('/', function () {
 // ------------------------------------------------------------------DB RAW QUERRIES
 
 Route::get('/insert', function(){
-    DB::insert('insert into posts(title, content) values(?,?)', ['PHP with laravel', 'Laravel is the best thing that has happened to php']);
+    DB::insert('insert into posts(title, content) values(?,?)', ['blah blah', 'blah blah blah']);
 });
 
 // Route::get('/read', function(){
@@ -75,6 +75,16 @@ Route::get('/read', function() {
         # code...
         return $post->title;
     }
+});
+
+Route::get('/findwhere', function() {
+    $posts = Post::where('id', 1)->orderBy('id', 'desc')->get();
+    return $posts;
+});
+
+Route::get('/findmore', function(){
+    $posts = Post::findOrFail(1);
+    return $posts;
 });
 
 
