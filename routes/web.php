@@ -53,6 +53,14 @@ Route::get('/read', function(){
     
 });
 
+Route::get('/update', function() {
+    $updated = DB::table('posts')
+        ->where('id', 1)
+        ->update(['title' => 'PHP with laravel vs']);
+
+    return $updated;
+});
+
 
 
 Route::resource('posts', 'PostsController');
