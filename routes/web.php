@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Post;
 
 Route::get('/', function () {
     return view('welcome');
@@ -38,20 +39,21 @@ Route::get('/', function () {
 
 
 // ------------------------------------------------------------------DB RAW QUERRIES
-// Route::get('/insert', function(){
-//     DB::insert('insert into posts(title, content) values(?,?)', ['PHP with laravel', 'Laravel is the best thing that has happened to php']);
-// });
 
-Route::get('/read', function(){
-    $results = DB::table('posts')->get();
-
-    dd($results);
-
-    // foreach ($results as $item) {
-    //     return $item->title;
-    // }
-    
+Route::get('/insert', function(){
+    DB::insert('insert into posts(title, content) values(?,?)', ['PHP with laravel', 'Laravel is the best thing that has happened to php']);
 });
+
+// Route::get('/read', function(){
+//     $results = DB::table('posts')->get();
+
+//     dd($results);
+
+//     // foreach ($results as $item) {
+//     //     return $item->title;
+//     // }
+    
+// });
 
 Route::get('/update', function() {
     $updated = DB::table('posts')
@@ -59,6 +61,20 @@ Route::get('/update', function() {
         ->update(['title' => 'PHP with laravel vs']);
 
     return $updated;
+});
+
+// Route::get('/delete', function() {
+//     $deleted = DB::table('posts')->where('id', '=', 1)->delete();
+//     return $deleted;
+// });
+
+// ------------------------------------------------------------------ELOQUENT
+Route::get('/read', function() {
+    $posts = Post::all();
+    foreach ($posts as $post) {
+        # code...
+        return $post->title;
+    }
 });
 
 
