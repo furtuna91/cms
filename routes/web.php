@@ -11,6 +11,8 @@
 |
 */
 use App\Post;
+use App\User;
+use App\Role;
 
 Route::get('/', function () {
     return view('welcome');
@@ -55,13 +57,13 @@ Route::get('/insert', function(){
     
 // });
 
-Route::get('/update', function() {
-    $updated = DB::table('posts')
-        ->where('id', 1)
-        ->update(['title' => 'PHP with laravel vs']);
+// Route::get('/update', function() {
+//     $updated = DB::table('posts')
+//         ->where('id', 1)
+//         ->update(['title' => 'PHP with laravel vs']);
 
-    return $updated;
-});
+//     return $updated;
+// });
 
 // Route::get('/delete', function() {
 //     $deleted = DB::table('posts')->where('id', '=', 1)->delete();
@@ -102,9 +104,77 @@ Route::get('/create', function() {
     ]);
 });
 
+// Route::get('/update', function() {
+//     Post::where('id', 1)->where('is_admin', 0)->update(['title' => 'new php title', 'content'=> 'i love blah blah']);
+// });
 
 
+// Route::get('/delete', function() {
+//     $post = Post::find(1);
+//     $post->delete();
+// });
+Route::get('/delete2', function() {
+    // Post::destroy([3,4]);
+    Post::where('is_admin', 0)->delete();
+});
+
+Route::get('/softdelete', function() {
+    Post::find(5)->delete();
+});
+
+Route::get('/readsoftdelete', function() {
+
+    // $post = Post::find(5);
+    // $post = Post::withTrashed()->where('id', 5)->get();
+    $post = Post::onlyTrashed()->where('is_admin', 0)->get();
+
+    return $post;
+});
+
+Route::get('/restore', function() {
+    
+    Post::withTrashed()->where('is_admin', 0)->restore();
+    // return $post;
+});
+
+Route::get('/forcedelete', function() {
+
+    Post::withTrashed()->where('is_admin', 0)->forceDelete();
+    Post::onlyTrashed()->where('is_admin', 0)->forceDelete();
+});
 
 
-Route::resource('posts', 'PostsController');
+/*
+|--------------------------------------------------------------------------
+| ELOQUENT RELATIONSHIPS
+|--------------------------------------------------------------------------
+*/
+// ------------------------------------------------------------------ONE TO ONE
+Route::get('/user/{id}/post', function($id) {
+    return User::find($id)->post;
+});
+
+Route::get('/post/{id}/user', function($id){
+    return Post::find($id)->user;
+});
+
+
+// ------------------------------------------------------------------ONE TO MANY
+Route::get('/posts', function() {
+    $user = User::find(1);
+    
+    foreach ($user->posts as $post) {
+        # code...
+        echo $post . '<br>';
+    }
+});
+
+
+// ------------------------------------------------------------------MANY TO MANY
+Route::get('/user/{id}/role', function($id) {
+    $user = User::find($id)->roles;
+    return $user;
+});
+
+// Route::resource('posts', 'PostsController');
 Route::get('/contact', 'PostsController@contact');
