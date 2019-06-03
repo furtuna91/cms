@@ -158,7 +158,18 @@ Route::get('/post/{id}/user', function($id){
 });
 
 
+// ------------------------------------------------------------------ONE TO MANY
+Route::get('/posts', function() {
+    $user = User::find(1);
+
+    foreach ($user->posts as $post) {
+        # code...
+        echo $post . '<br>';
+    }
+});
 
 
-Route::resource('posts', 'PostsController');
+
+
+// Route::resource('posts', 'PostsController');
 Route::get('/contact', 'PostsController@contact');
