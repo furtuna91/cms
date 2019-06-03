@@ -102,8 +102,18 @@ Route::get('/create', function() {
     ]);
 });
 
-Route::get('/update', function() {
-    Post::where('id', 1)->where('is_admin', 0)->update(['title' => 'new php title', 'content'=> 'i love blah blah']);
+// Route::get('/update', function() {
+//     Post::where('id', 1)->where('is_admin', 0)->update(['title' => 'new php title', 'content'=> 'i love blah blah']);
+// });
+
+
+// Route::get('/delete', function() {
+//     $post = Post::find(1);
+//     $post->delete();
+// });
+Route::get('/delete2', function() {
+    Post::destroy([3,4]);
+    // Post::where('is_admin', 0)->delete();
 });
 
 
