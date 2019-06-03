@@ -112,10 +112,34 @@ Route::get('/create', function() {
 //     $post->delete();
 // });
 Route::get('/delete2', function() {
-    Post::destroy([3,4]);
-    // Post::where('is_admin', 0)->delete();
+    // Post::destroy([3,4]);
+    Post::where('is_admin', 0)->delete();
 });
 
+Route::get('/softdelete', function() {
+    Post::find(5)->delete();
+});
+
+Route::get('/readsoftdelete', function() {
+
+    // $post = Post::find(5);
+    // $post = Post::withTrashed()->where('id', 5)->get();
+    $post = Post::onlyTrashed()->where('is_admin', 0)->get();
+
+    return $post;
+});
+
+Route::get('/restore', function() {
+    
+    Post::withTrashed()->where('is_admin', 0)->restore();
+    // return $post;
+});
+
+Route::get('/forcedelete', function() {
+
+    Post::withTrashed()->where('is_admin', 0)->forceDelete();
+    Post::onlyTrashed()->where('is_admin', 0)->forceDelete();
+});
 
 
 
