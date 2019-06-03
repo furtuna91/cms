@@ -11,6 +11,7 @@
 |
 */
 use App\Post;
+use App\User;
 
 Route::get('/', function () {
     return view('welcome');
@@ -139,6 +140,17 @@ Route::get('/forcedelete', function() {
 
     Post::withTrashed()->where('is_admin', 0)->forceDelete();
     Post::onlyTrashed()->where('is_admin', 0)->forceDelete();
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| ELOQUENT RELATIONSHIPS
+|--------------------------------------------------------------------------
+*/
+// ------------------------------------------------------------------ONE TO ONE
+Route::get('/user/{id}/post', function($id) {
+    return User::find($id)->post;
 });
 
 
