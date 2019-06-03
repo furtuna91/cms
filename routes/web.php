@@ -12,6 +12,7 @@
 */
 use App\Post;
 use App\User;
+use App\Role;
 
 Route::get('/', function () {
     return view('welcome');
@@ -161,7 +162,7 @@ Route::get('/post/{id}/user', function($id){
 // ------------------------------------------------------------------ONE TO MANY
 Route::get('/posts', function() {
     $user = User::find(1);
-
+    
     foreach ($user->posts as $post) {
         # code...
         echo $post . '<br>';
@@ -169,7 +170,11 @@ Route::get('/posts', function() {
 });
 
 
-
+// ------------------------------------------------------------------MANY TO MANY
+Route::get('/user/{id}/role', function($id) {
+    $user = User::find($id)->roles;
+    return $user;
+});
 
 // Route::resource('posts', 'PostsController');
 Route::get('/contact', 'PostsController@contact');
