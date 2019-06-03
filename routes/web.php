@@ -11,6 +11,8 @@
 |
 */
 use App\Post;
+use App\User;
+use App\Role;
 
 Route::get('/', function () {
     return view('welcome');
@@ -142,7 +144,37 @@ Route::get('/forcedelete', function() {
 });
 
 
+/*
+|--------------------------------------------------------------------------
+| ELOQUENT RELATIONSHIPS
+|--------------------------------------------------------------------------
+*/
+// ------------------------------------------------------------------ONE TO ONE
+Route::get('/user/{id}/post', function($id) {
+    return User::find($id)->post;
+});
+
+Route::get('/post/{id}/user', function($id){
+    return Post::find($id)->user;
+});
 
 
-Route::resource('posts', 'PostsController');
+// ------------------------------------------------------------------ONE TO MANY
+Route::get('/posts', function() {
+    $user = User::find(1);
+    
+    foreach ($user->posts as $post) {
+        # code...
+        echo $post . '<br>';
+    }
+});
+
+
+// ------------------------------------------------------------------MANY TO MANY
+Route::get('/user/{id}/role', function($id) {
+    $user = User::find($id)->roles;
+    return $user;
+});
+
+// Route::resource('posts', 'PostsController');
 Route::get('/contact', 'PostsController@contact');
