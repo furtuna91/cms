@@ -55,13 +55,13 @@ Route::get('/insert', function(){
     
 // });
 
-Route::get('/update', function() {
-    $updated = DB::table('posts')
-        ->where('id', 1)
-        ->update(['title' => 'PHP with laravel vs']);
+// Route::get('/update', function() {
+//     $updated = DB::table('posts')
+//         ->where('id', 1)
+//         ->update(['title' => 'PHP with laravel vs']);
 
-    return $updated;
-});
+//     return $updated;
+// });
 
 // Route::get('/delete', function() {
 //     $deleted = DB::table('posts')->where('id', '=', 1)->delete();
@@ -100,6 +100,10 @@ Route::get('/create', function() {
         'title' => 'the created method',
         'content' => 'wow...i am creating'
     ]);
+});
+
+Route::get('/update', function() {
+    Post::where('id', 1)->where('is_admin', 0)->update(['title' => 'new php title', 'content'=> 'i love blah blah']);
 });
 
 
