@@ -13,6 +13,7 @@
 use App\Post;
 use App\User;
 use App\Role;
+use App\Country;
 
 Route::get('/', function () {
     return view('welcome');
@@ -42,9 +43,9 @@ Route::get('/', function () {
 
 // ------------------------------------------------------------------DB RAW QUERRIES
 
-Route::get('/insert', function(){
-    DB::insert('insert into posts(title, content) values(?,?)', ['blah blah', 'blah blah blah']);
-});
+// Route::get('/insert', function(){
+//     DB::insert('insert into countries(title, content) values(?,?)', ['blah blah', 'blah blah blah']);
+// });
 
 // Route::get('/read', function(){
 //     $results = DB::table('posts')->get();
@@ -102,6 +103,19 @@ Route::get('/create', function() {
         'title' => 'the created method',
         'content' => 'wow...i am creating'
     ]);
+    // Country::create(
+    //     [
+    //         'name' => 'Bulgaria',
+    //     ]
+    // );
+    // User::create(
+    //     [
+    //         'country_id' => '0',
+    //         'name' => 'Cornea',
+    //         'email' => 'blahblagh',
+    //         'password' => '123',
+    //     ]
+    // );
 });
 
 // Route::get('/update', function() {
@@ -174,6 +188,16 @@ Route::get('/posts', function() {
 Route::get('/user/{id}/role', function($id) {
     $user = User::find($id)->roles;
     return $user;
+});
+
+// ------------------------------------------------------------------HAS MANY
+Route::get('/user/country', function() {
+    $country = Country::find(2);
+
+    foreach ($country->posts as $post) {
+        # code...
+        echo $post->title;
+    }
 });
 
 // Route::resource('posts', 'PostsController');
