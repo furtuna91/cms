@@ -14,6 +14,7 @@ use App\Post;
 use App\User;
 use App\Role;
 use App\Country;
+use App\Photo;
 
 Route::get('/', function () {
     return view('welcome');
@@ -199,6 +200,41 @@ Route::get('/user/country', function() {
         echo $post->title;
     }
 });
+
+
+/*
+|--------------------------------------------------------------------------
+| POLYMORPHIC RELATIONSHIPS
+|--------------------------------------------------------------------------
+*/
+Route::get('/user/photos', function() {
+    $user = User::find(1);
+    foreach ($user->photos as $photo) {
+        # code...
+        return $photo;
+    }
+});
+
+Route::get('/post/photos', function() {
+    $post = Post::find(1);
+    foreach ($post->photos as $photo) {
+        # code...
+        dd($photo);
+    }
+});
+
+
+Route::get('/photo/{id}/post', function($id) {
+    $photo = Photo::findOrFail($id);
+
+    return $photo->imageable;
+    // $post = Post::find(1);
+    // foreach ($post->photos as $photo) {
+    //     # code...
+    //     dd($photo);
+    // }
+});
+
 
 // Route::resource('posts', 'PostsController');
 Route::get('/contact', 'PostsController@contact');
