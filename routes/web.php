@@ -15,6 +15,7 @@ use App\User;
 use App\Role;
 use App\Country;
 use App\Photo;
+use App\Tag;
 
 Route::get('/', function () {
     return view('welcome');
@@ -234,6 +235,26 @@ Route::get('/photo/{id}/post', function($id) {
     //     dd($photo);
     // }
 });
+// ------------------------------------------------------------------POLYMORPHIC MANY TO MANY
+Route::get('/post/tag', function() {
+    $post = Post::find(1);
+
+    foreach ($post->tags as $tag) {
+        # code...
+        dd($tag);
+    }
+});
+
+// Route::get('/tag/post', function() {
+//     $tag = Tag::findOrFail(2);
+//     return $tag->posts;
+
+//     // dd($tag);
+//     // foreach ($tag->posts as $post) {
+//     //     # code...
+//     //     dd($post);
+//     // }
+// });
 
 
 // Route::resource('posts', 'PostsController');
