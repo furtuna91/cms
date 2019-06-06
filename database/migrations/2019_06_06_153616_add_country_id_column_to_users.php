@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddUserIdToPostsTable extends Migration
+class AddCountryIdColumnToUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddUserIdToPostsTable extends Migration
      */
     public function up()
     {
-        Schema::table('posts', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
-            // $table->integer('user_id')->after('id')->unsigned();
+            $table->integer('country_id')->after('id');
         });
     }
 
@@ -26,9 +26,9 @@ class AddUserIdToPostsTable extends Migration
      */
     public function down()
     {
-        Schema::table('posts', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
-            // $table->dropColumn('user_id');
+            $table->dropColumn('country_id');
         });
     }
 }

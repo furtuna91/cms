@@ -13,6 +13,9 @@
 use App\Post;
 use App\User;
 use App\Role;
+use App\Country;
+use App\Photo;
+use App\Tag;
 
 Route::get('/', function () {
     return view('welcome');
@@ -42,9 +45,9 @@ Route::get('/', function () {
 
 // ------------------------------------------------------------------DB RAW QUERRIES
 
-Route::get('/insert', function(){
-    DB::insert('insert into posts(title, content) values(?,?)', ['blah blah', 'blah blah blah']);
-});
+// Route::get('/insert', function(){
+//     DB::insert('insert into countries(title, content) values(?,?)', ['blah blah', 'blah blah blah']);
+// });
 
 // Route::get('/read', function(){
 //     $results = DB::table('posts')->get();
@@ -102,6 +105,19 @@ Route::get('/create', function() {
         'title' => 'the created method',
         'content' => 'wow...i am creating'
     ]);
+    // Country::create(
+    //     [
+    //         'name' => 'Bulgaria',
+    //     ]
+    // );
+    // User::create(
+    //     [
+    //         'country_id' => '0',
+    //         'name' => 'Cornea',
+    //         'email' => 'blahblagh',
+    //         'password' => '123',
+    //     ]
+    // );
 });
 
 // Route::get('/update', function() {
@@ -175,6 +191,71 @@ Route::get('/user/{id}/role', function($id) {
     $user = User::find($id)->roles;
     return $user;
 });
+
+// ------------------------------------------------------------------HAS MANY
+Route::get('/user/country', function() {
+    $country = Country::find(2);
+
+    foreach ($country->posts as $post) {
+        # code...
+        echo $post->title;
+    }
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| POLYMORPHIC RELATIONSHIPS
+|--------------------------------------------------------------------------
+*/
+Route::get('/user/photos', function() {
+    $user = User::find(1);
+    foreach ($user->photos as $photo) {
+        # code...
+        return $photo;
+    }
+});
+
+Route::get('/post/photos', function() {
+    $post = Post::find(1);
+    foreach ($post->photos as $photo) {
+        # code...
+        dd($photo);
+    }
+});
+
+
+Route::get('/photo/{id}/post', function($id) {
+    $photo = Photo::findOrFail($id);
+
+    return $photo->imageable;
+    // $post = Post::find(1);
+    // foreach ($post->photos as $photo) {
+    //     # code...
+    //     dd($photo);
+    // }
+});
+// ------------------------------------------------------------------POLYMORPHIC MANY TO MANY
+Route::get('/post/tag', function() {
+    $post = Post::find(1);
+
+    foreach ($post->tags as $tag) {
+        # code...
+        dd($tag);
+    }
+});
+
+// Route::get('/tag/post', function() {
+//     $tag = Tag::findOrFail(2);
+//     return $tag->posts;
+
+//     // dd($tag);
+//     // foreach ($tag->posts as $post) {
+//     //     # code...
+//     //     dd($post);
+//     // }
+// });
+
 
 // Route::resource('posts', 'PostsController');
 Route::get('/contact', 'PostsController@contact');
