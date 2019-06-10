@@ -257,5 +257,14 @@ Route::get('/post/tag', function() {
 // });
 
 
-// Route::resource('posts', 'PostsController');
+/*
+|--------------------------------------------------------------------------
+| CRUD APPLICATION
+|--------------------------------------------------------------------------
+*/
+
+// Route::resource('/posts', 'PostsController')
+Route::resource('posts', 'PostsController');
+
+
 Route::get('/contact', 'PostsController@contact');
