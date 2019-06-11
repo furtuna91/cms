@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostRequest;
 use Illuminate\Http\Request;
 
 use App\Post;
@@ -17,7 +18,7 @@ class PostsController extends Controller
     {
         //
         // return 'post number ' . $id;
-        $posts = Post::all();
+        $posts = Post::latest();
 
         return view('posts.index', compact('posts'));
 
@@ -41,10 +42,14 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
         //
         // return $request->title;
+        // $this->validate($request, [
+        //     'title' => 'required|max:50',
+        //     // 'content' => 'required'
+        // ]);
 
         Post::create($request->all());
 
