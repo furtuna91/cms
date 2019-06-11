@@ -16,6 +16,7 @@ use App\Role;
 use App\Country;
 use App\Photo;
 use App\Tag;
+use Carbon\Carbon;
 
 Route::get('/', function () {
     return view('welcome');
@@ -267,6 +268,20 @@ Route::get('/post/tag', function() {
 //     Route::resource('/posts', 'PostsController');
 // });
 
+
+/*
+|--------------------------------------------------------------------------
+| DATES
+|--------------------------------------------------------------------------
+*/
+Route::get('/dates', function() {
+    $date = new DateTime('+1 week');
+    // echo $date->format('m-d-y');
+
+    echo Carbon::now()->addDays(10)->diffForHumans();
+    echo Carbon::now()->subMonths(5)->diffForHumans();
+
+});
 
 // Route::resource('/posts', 'PostsController')
 Route::resource('posts', 'PostsController');
