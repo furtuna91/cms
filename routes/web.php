@@ -300,3 +300,7 @@ Route::resource('posts', 'PostsController');
 
 
 Route::get('/contact', 'PostsController@contact');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
